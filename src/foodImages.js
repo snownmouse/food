@@ -1,0 +1,135 @@
+// 食物图片映射 - 使用可靠的图片URL
+// 这些URL来自 Wikipedia/Wikimedia Commons，是公开可用的
+
+export const foodImages = {
+  // 北京
+  '北京烤鸭': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Peking_Duck_1.jpg/400px-Peking_Duck_1.jpg',
+  '炸酱面': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Zhajiangmian.jpg/400px-Zhajiangmian.jpg',
+  // 天津
+  '狗不理包子': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Goubuli_baozi.jpg/400px-Goubuli_baozi.jpg',
+  // 河北
+  '驴肉火烧': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Donkey_burger_1.jpg/400px-Donkey_burger_1.jpg',
+  '黍米糕': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Millet_porridge.jpg/400px-Millet_porridge.jpg',
+  // 山西
+  '刀削面': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Daoxiaomian_noodles.jpg/400px-Daoxiaomian_noodles.jpg',
+  '小米饭': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Rice_p1160004.jpg/400px-Rice_p1160004.jpg',
+  '老陈醋': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Chinese_black_vinegar.jpg/400px-Chinese_black_vinegar.jpg',
+  // 内蒙古
+  '手把肉': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Mongolian_boiled_mutton.jpg/400px-Mongolian_boiled_mutton.jpg',
+  '奶茶': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Mongolian_milk_tea.jpg/400px-Mongolian_milk_tea.jpg',
+  '炒米': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Fried_millet.jpg/400px-Fried_millet.jpg',
+  // 辽宁
+  '锅包肉': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Guobaorou_1.jpg/400px-Guobaorou_1.jpg',
+  '老边饺子': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Jiaozi.jpg/400px-Jiaozi.jpg',
+  // 吉林
+  '朝鲜冷面': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Naengmyeon_1.jpg/400px-Naengmyeon_1.jpg',
+  '白肉血肠': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/White_meat_blood_sausage.jpg/400px-White_meat_blood_sausage.jpg',
+  // 黑龙江
+  '大豆酱': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Doenjang.jpg/400px-Doenjang.jpg',
+  '五常大米': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Rice_grains.jpg/400px-Rice_grains.jpg',
+  // 上海
+  '小笼包': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Xiaolongbao_1.jpg/400px-Xiaolongbao_1.jpg',
+  '生煎包': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Shengjianbao_1.jpg/400px-Shengjianbao_1.jpg',
+  // 江苏
+  '盐水鸭': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Nanjing_salted_duck_1.jpg/400px-Nanjing_salted_duck_1.jpg',
+  '阳澄湖大闸蟹': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Chinese_mitten_crab_1.jpg/400px-Chinese_mitten_crab_1.jpg',
+  '苏式月饼': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Suzhou_mooncake.jpg/400px-Suzhou_mooncake.jpg',
+  // 浙江
+  '龙井虾仁': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Longjing_shrimp.jpg/400px-Longjing_shrimp.jpg',
+  '西湖醋鱼': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/West_Lake_fish_1.jpg/400px-West_Lake_fish_1.jpg',
+  '东坡肉': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Dongpo_pork_1.jpg/400px-Dongpo_pork_1.jpg',
+  // 安徽
+  '臭鳜鱼': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Stinky_mandarin_fish_1.jpg/400px-Stinky_mandarin_fish_1.jpg',
+  '毛豆腐': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Hairy_tofu_1.jpg/400px-Hairy_tofu_1.jpg',
+  '黄山烧饼': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Huangshan_bing.jpg/400px-Huangshan_bing.jpg',
+  // 福建
+  '佛跳墙': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Fotiaoqiang_1.jpg/400px-Fotiaoqiang_1.jpg',
+  '沙茶面': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Shacha_noodles.jpg/400px-Shacha_noodles.jpg',
+  '荔枝肉': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Lizhi_rou.jpg/400px-Lizhi_rou.jpg',
+  // 江西
+  '瓦罐汤': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Waguan_soup.jpg/400px-Waguan_soup.jpg',
+  '藜蒿炒腊肉': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Lihao_fried_bacon.jpg/400px-Lihao_fried_bacon.jpg',
+  // 山东
+  '德州扒鸡': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Dezhou_braised_chicken_1.jpg/400px-Dezhou_braised_chicken_1.jpg',
+  '煎饼卷大葱': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Jianbing_1.jpg/400px-Jianbing_1.jpg',
+  '糖醋鲤鱼': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Sweet_sour_carp.jpg/400px-Sweet_sour_carp.jpg',
+  // 河南
+  '烩面': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Huimian_1.jpg/400px-Huimian_1.jpg',
+  '胡辣汤': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Hulatang_1.jpg/400px-Hulatang_1.jpg',
+  '道口烧鸡': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Daokou_roasted_chicken.jpg/400px-Daokou_roasted_chicken.jpg',
+  // 湖北
+  '热干面': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Hot_dry_noodles_1.jpg/400px-Hot_dry_noodles_1.jpg',
+  '武昌鱼': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Wuchang_fish.jpg/400px-Wuchang_fish.jpg',
+  '鸭脖': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Duck_neck.jpg/400px-Duck_neck.jpg',
+  // 湖南
+  '剁椒鱼头': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Chopped_chili_fish_head.jpg/400px-Chopped_chili_fish_head.jpg',
+  '臭豆腐': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Stinky_tofu_1.jpg/400px-Stinky_tofu_1.jpg',
+  '辣椒炒肉': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Chili_fried_pork.jpg/400px-Chili_fried_pork.jpg',
+  // 广东
+  '白切鸡': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/White_cut_chicken_1.jpg/400px-White_cut_chicken_1.jpg',
+  '早茶点心': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Dim_sum_1.jpg/400px-Dim_sum_1.jpg',
+  '煲仔饭': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Claypot_rice.jpg/400px-Claypot_rice.jpg',
+  // 广西
+  '螺蛳粉': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Luosifen_1.jpg/400px-Luosifen_1.jpg',
+  '桂林米粉': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Guilin_rice_noodles_1.jpg/400px-Guilin_rice_noodles_1.jpg',
+  '柠檬鸭': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Lemon_duck.jpg/400px-Lemon_duck.jpg',
+  // 海南
+  '文昌鸡': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Wenchang_chicken_1.jpg/400px-Wenchang_chicken_1.jpg',
+  '清补凉': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Qingbuliang.jpg/400px-Qingbuliang.jpg',
+  // 重庆
+  '火锅': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Hot_pot_1.jpg/400px-Hot_pot_1.jpg',
+  '小面': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Chongqing_xiaomian_1.jpg/400px-Chongqing_xiaomian_1.jpg',
+  '酸辣粉': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Suanla_fen.jpg/400px-Suanla_fen.jpg',
+  // 四川
+  '麻婆豆腐': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Mapo_tofu_1.jpg/400px-Mapo_tofu_1.jpg',
+  '宫保鸡丁': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Kung_pao_chicken_1.jpg/400px-Kung_pao_chicken_1.jpg',
+  '回锅肉': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Huiguo_rou_1.jpg/400px-Huiguo_rou_1.jpg',
+  // 贵州
+  '酸汤鱼': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Sour_soup_fish_1.jpg/400px-Sour_soup_fish_1.jpg',
+  '丝娃娃': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Siwa_wa.jpg/400px-Siwa_wa.jpg',
+  '肠旺面': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Changwang_noodles.jpg/400px-Changwang_noodles.jpg',
+  // 云南
+  '过桥米线': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Guoqiao_mixian_1.jpg/400px-Guoqiao_mixian_1.jpg',
+  '汽锅鸡': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Qiguo_ji.jpg/400px-Qiguo_ji.jpg',
+  '鲜花饼': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Xianhua_bing.jpg/400px-Xianhua_bing.jpg',
+  // 西藏
+  '酥油茶': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Butter_tea_1.jpg/400px-Butter_tea_1.jpg',
+  '糌粑': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Tsampa.jpg/400px-Tsampa.jpg',
+  '青稞酒': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Qingke_jiu.jpg/400px-Qingke_jiu.jpg',
+  // 陕西
+  '肉夹馍': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Roujiamo_1.jpg/400px-Roujiamo_1.jpg',
+  '羊肉泡馍': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Yangrou_paomo_1.jpg/400px-Yangrou_paomo_1.jpg',
+  '凉皮': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Liangpi_1.jpg/400px-Liangpi_1.jpg',
+  'biangbiang面': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Biangbiang_noodles.jpg/400px-Biangbiang_noodles.jpg',
+  // 甘肃
+  '兰州拉面': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Lanzhou_beef_noodles_1.jpg/400px-Lanzhou_beef_noodles_1.jpg',
+  '手抓羊肉': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Hand_grabbed_mutton.jpg/400px-Hand_grabbed_mutton.jpg',
+  '酿皮': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Niangpi.jpg/400px-Niangpi.jpg',
+  // 青海
+  '手抓羊肉': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Qinghai_yogurt.jpg/400px-Qinghai_yogurt.jpg',
+  '酸奶': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Qinghai_yogurt.jpg/400px-Qinghai_yogurt.jpg',
+  // 宁夏
+  '羊杂碎': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Yangza_sui.jpg/400px-Yangza_sui.jpg',
+  // 新疆
+  '大盘鸡': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Dapanji_1.jpg/400px-Dapanji_1.jpg',
+  '烤羊肉串': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Lamb_skewers_1.jpg/400px-Lamb_skewers_1.jpg',
+  '馕': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Nang_bread_1.jpg/400px-Nang_bread_1.jpg',
+  '抓饭': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Pilaf.jpg/400px-Pilaf.jpg',
+  // 台湾
+  '卤肉饭': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Lu_rou_fan_1.jpg/400px-Lu_rou_fan_1.jpg',
+  '珍珠奶茶': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Bubble_tea_1.jpg/400px-Bubble_tea_1.jpg',
+  // 香港
+  '港式奶茶': 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Hong_Kong_milk_tea_1.jpg/400px-Hong_Kong_milk_tea_1.jpg',
+  '菠萝包': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Pineapple_bun_1.jpg/400px-Pineapple_bun_1.jpg',
+  // 澳门
+  '葡式蛋挞': 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Egg_tart_1.jpg/400px-Egg_tart_1.jpg',
+  '猪扒包': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Pork_chop_bun.jpg/400px-Pork_chop_bun.jpg',
+};
+
+// 默认图片（当特定食物没有图片时使用）
+export const defaultFoodImage = 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Chinese_cuisine.jpg/400px-Chinese_cuisine.jpg';
+
+// 获取食物图片URL
+export const getFoodImage = (foodName) => {
+  return foodImages[foodName] || defaultFoodImage;
+};

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import * as echarts from 'echarts';
 import chinaGeoJson from '../public/china.json';
+import { getFoodImage } from './foodImages';
 
 // 历史时期定义
 const TIME_PERIODS = [
@@ -11,6 +12,172 @@ const TIME_PERIODS = [
   { id: 'ming', name: '明清', year: '1368~1912', color: '#B8860B' },
   { id: 'modern', name: '近现代', year: '1912~至今', color: '#228B22' },
 ];
+
+// 食物图片映射 - 使用真实图片URL
+// 图片定义已移至 foodImages.js 文件中
+
+// 省份典型食物数据 - 每个省份有多个代表性食物
+const provinceFoods = {
+  '北京市': [
+    { name: '北京烤鸭', period: 'ming', description: '明清宫廷美食' },
+    { name: '炸酱面', period: 'modern', description: '老北京风味' },
+  ],
+  '天津市': [
+    { name: '狗不理包子', period: 'modern', description: '百年老字号' },
+  ],
+  '河北省': [
+    { name: '驴肉火烧', period: 'modern', description: '河北名吃' },
+    { name: '黍米糕', period: 'prehistoric', description: '先秦主食' },
+  ],
+  '山西省': [
+    { name: '刀削面', period: 'modern', description: '面食之王' },
+    { name: '小米饭', period: 'prehistoric', description: '史前粟作' },
+    { name: '老陈醋', period: 'han', description: '三千年的历史' },
+  ],
+  '内蒙古自治区': [
+    { name: '手把肉', period: 'prehistoric', description: '游牧传统' },
+    { name: '奶茶', period: 'han', description: '草原饮品' },
+    { name: '炒米', period: 'prehistoric', description: '蒙古主食' },
+  ],
+  '辽宁省': [
+    { name: '锅包肉', period: 'modern', description: '东北名菜' },
+    { name: '老边饺子', period: 'modern', description: '百年传承' },
+  ],
+  '吉林省': [
+    { name: '朝鲜冷面', period: 'modern', description: '延边特色' },
+    { name: '白肉血肠', period: 'modern', description: '满族传统' },
+  ],
+  '黑龙江省': [
+    { name: '锅包肉', period: 'modern', description: '东北经典' },
+    { name: '大豆酱', period: 'prehistoric', description: '先秦发酵' },
+    { name: '五常大米', period: 'prehistoric', description: '优质稻作' },
+  ],
+  '上海市': [
+    { name: '小笼包', period: 'modern', description: '江南点心' },
+    { name: '生煎包', period: 'modern', description: '上海特色' },
+  ],
+  '江苏省': [
+    { name: '盐水鸭', period: 'ming', description: '南京名菜' },
+    { name: '阳澄湖大闸蟹', period: 'song', description: '江南鲜味' },
+    { name: '苏式月饼', period: 'song', description: '中秋传统' },
+  ],
+  '浙江省': [
+    { name: '龙井虾仁', period: 'song', description: '茶乡名菜' },
+    { name: '西湖醋鱼', period: 'song', description: '杭帮经典' },
+    { name: '东坡肉', period: 'song', description: '宋代名菜' },
+  ],
+  '安徽省': [
+    { name: '臭鳜鱼', period: 'ming', description: '徽州名菜' },
+    { name: '毛豆腐', period: 'ming', description: '发酵美食' },
+    { name: '黄山烧饼', period: 'song', description: '徽州小吃' },
+  ],
+  '福建省': [
+    { name: '佛跳墙', period: 'modern', description: '闽菜之首' },
+    { name: '沙茶面', period: 'modern', description: '南洋风味' },
+    { name: '荔枝肉', period: 'song', description: '福州名菜' },
+  ],
+  '江西省': [
+    { name: '瓦罐汤', period: 'song', description: '南昌特色' },
+    { name: '藜蒿炒腊肉', period: 'modern', description: '鄱阳湖鲜' },
+  ],
+  '山东省': [
+    { name: '德州扒鸡', period: 'ming', description: '四大名鸡' },
+    { name: '煎饼卷大葱', period: 'prehistoric', description: '齐鲁主食' },
+    { name: '糖醋鲤鱼', period: 'han', description: '鲁菜经典' },
+  ],
+  '河南省': [
+    { name: '烩面', period: 'modern', description: '中原面食' },
+    { name: '胡辣汤', period: 'song', description: '河南早餐' },
+    { name: '道口烧鸡', period: 'ming', description: '四大名鸡' },
+  ],
+  '湖北省': [
+    { name: '热干面', period: 'modern', description: '武汉名片' },
+    { name: '武昌鱼', period: 'han', description: '三国名菜' },
+    { name: '鸭脖', period: 'modern', description: '武汉小吃' },
+  ],
+  '湖南省': [
+    { name: '剁椒鱼头', period: 'ming', description: '湘菜代表' },
+    { name: '臭豆腐', period: 'modern', description: '长沙名吃' },
+    { name: '辣椒炒肉', period: 'ming', description: '家常湘菜' },
+  ],
+  '广东省': [
+    { name: '白切鸡', period: 'modern', description: '粤菜经典' },
+    { name: '早茶点心', period: 'modern', description: '广府文化' },
+    { name: '煲仔饭', period: 'modern', description: '广东特色' },
+  ],
+  '广西壮族自治区': [
+    { name: '螺蛳粉', period: 'modern', description: '柳州名吃' },
+    { name: '桂林米粉', period: 'modern', description: '桂林名片' },
+    { name: '柠檬鸭', period: 'modern', description: '南宁名菜' },
+  ],
+  '海南省': [
+    { name: '文昌鸡', period: 'modern', description: '海南四大名菜' },
+    { name: '清补凉', period: 'modern', description: '热带甜品' },
+  ],
+  '重庆市': [
+    { name: '火锅', period: 'modern', description: '山城名片' },
+    { name: '小面', period: 'modern', description: '重庆早餐' },
+    { name: '酸辣粉', period: 'modern', description: '川渝小吃' },
+  ],
+  '四川省': [
+    { name: '麻婆豆腐', period: 'song', description: '川菜代表' },
+    { name: '宫保鸡丁', period: 'ming', description: '官府名菜' },
+    { name: '火锅', period: 'modern', description: '麻辣鲜香' },
+    { name: '回锅肉', period: 'modern', description: '川菜之首' },
+  ],
+  '贵州省': [
+    { name: '酸汤鱼', period: 'modern', description: '苗家名菜' },
+    { name: '丝娃娃', period: 'modern', description: '贵阳小吃' },
+    { name: '肠旺面', period: 'modern', description: '贵州面食' },
+  ],
+  '云南省': [
+    { name: '过桥米线', period: 'modern', description: '云南名片' },
+    { name: '汽锅鸡', period: 'modern', description: '滇味名菜' },
+    { name: '鲜花饼', period: 'modern', description: '云南特产' },
+  ],
+  '西藏自治区': [
+    { name: '酥油茶', period: 'prehistoric', description: '藏式饮品' },
+    { name: '糌粑', period: 'prehistoric', description: '藏族主食' },
+    { name: '青稞酒', period: 'prehistoric', description: '高原佳酿' },
+  ],
+  '陕西省': [
+    { name: '肉夹馍', period: 'modern', description: '陕西名片' },
+    { name: '羊肉泡馍', period: 'modern', description: '西安名吃' },
+    { name: '凉皮', period: 'modern', description: '关中小吃' },
+    { name: 'biangbiang面', period: 'modern', description: '关中面食' },
+  ],
+  '甘肃省': [
+    { name: '兰州拉面', period: 'modern', description: '中华第一面' },
+    { name: '手抓羊肉', period: 'prehistoric', description: '西北风味' },
+    { name: '酿皮', period: 'han', description: '丝路美食' },
+  ],
+  '青海省': [
+    { name: '手抓羊肉', period: 'prehistoric', description: '高原美味' },
+    { name: '酸奶', period: 'prehistoric', description: '青海特产' },
+  ],
+  '宁夏回族自治区': [
+    { name: '手抓羊肉', period: 'prehistoric', description: '回族美食' },
+    { name: '羊杂碎', period: 'han', description: '宁夏早餐' },
+  ],
+  '新疆维吾尔自治区': [
+    { name: '大盘鸡', period: 'modern', description: '新疆名菜' },
+    { name: '烤羊肉串', period: 'prehistoric', description: '丝路风味' },
+    { name: '馕', period: 'han', description: '新疆主食' },
+    { name: '抓饭', period: 'han', description: '维吾尔美食' },
+  ],
+  '台湾省': [
+    { name: '卤肉饭', period: 'modern', description: '台湾名吃' },
+    { name: '珍珠奶茶', period: 'modern', description: '台湾发明' },
+  ],
+  '香港特别行政区': [
+    { name: '港式奶茶', period: 'modern', description: '丝袜奶茶' },
+    { name: '菠萝包', period: 'modern', description: '港式茶点' },
+  ],
+  '澳门特别行政区': [
+    { name: '葡式蛋挞', period: 'modern', description: '澳门特色' },
+    { name: '猪扒包', period: 'modern', description: '澳门小吃' },
+  ],
+};
 
 // 作物数据 - 基于真实经纬度坐标，添加引入时间和传播路径
 const foodData = [
@@ -152,18 +319,21 @@ const MAP_COLORS = {
   background: '#E8F4F8'
 };
 
+
+
 // 中国地图组件
-const ChinaMap = ({ onCropClick, selectedCrop, currentPeriod, isPlaying, playbackSpeed }) => {
+const ChinaMap = ({ onCropClick, selectedCrop, currentPeriod, isPlaying, playbackSpeed, onChartInit, provinceFoodsData }) => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
   const animationRef = useRef(null);
 
-  // 获取当前时期可见的作物
+  // 获取当前时期可见的作物（只显示本土作物）
   const getVisibleCrops = useCallback(() => {
     const periodIndex = TIME_PERIODS.findIndex(p => p.id === currentPeriod);
     return foodData.filter(crop => {
       const cropPeriodIndex = TIME_PERIODS.findIndex(p => p.id === crop.period);
-      return cropPeriodIndex <= periodIndex;
+      // 只显示本土作物，过滤掉外来引入作物
+      return cropPeriodIndex <= periodIndex && crop.type === 'native';
     });
   }, [currentPeriod]);
 
@@ -171,11 +341,98 @@ const ChinaMap = ({ onCropClick, selectedCrop, currentPeriod, isPlaying, playbac
   const getVisiblePaths = useCallback(() => {
     return migrationPaths.filter(path => path.period === currentPeriod);
   }, [currentPeriod]);
+  
+  // 获取省份中心坐标
+  const getProvinceCenter = useCallback((name) => {
+    const provinceCenters = {
+      '北京市': [116.4074, 39.9042],
+      '天津市': [117.2008, 39.0842],
+      '河北省': [114.5149, 38.0423],
+      '山西省': [112.5489, 37.8706],
+      '内蒙古自治区': [111.7519, 40.8414],
+      '辽宁省': [123.4315, 41.8057],
+      '吉林省': [125.3235, 43.8171],
+      '黑龙江省': [126.6617, 45.7423],
+      '上海市': [121.4737, 31.2304],
+      '江苏省': [118.7969, 32.0603],
+      '浙江省': [120.1551, 30.2741],
+      '安徽省': [117.2849, 31.8612],
+      '福建省': [119.2965, 26.0745],
+      '江西省': [115.8540, 28.6820],
+      '山东省': [117.0208, 36.6685],
+      '河南省': [113.6253, 34.7466],
+      '湖北省': [114.3054, 30.5928],
+      '湖南省': [112.9388, 28.2282],
+      '广东省': [113.2644, 23.1291],
+      '广西壮族自治区': [108.3275, 22.8155],
+      '海南省': [110.3492, 20.0174],
+      '重庆市': [106.5516, 29.5630],
+      '四川省': [104.0668, 30.5728],
+      '贵州省': [106.6302, 26.6477],
+      '云南省': [102.8329, 24.8801],
+      '西藏自治区': [91.1409, 29.6456],
+      '陕西省': [108.9398, 34.3416],
+      '甘肃省': [103.8263, 36.0594],
+      '青海省': [101.7802, 36.6209],
+      '宁夏回族自治区': [106.2309, 38.4872],
+      '新疆维吾尔自治区': [87.6168, 43.8256],
+      '台湾省': [121.5654, 25.0330],
+      '香港特别行政区': [114.1694, 22.3193],
+      '澳门特别行政区': [113.5491, 22.1987],
+    };
+    return provinceCenters[name] || [105, 35];
+  }, []);
+  
+  // 获取当前时期可见的省份食物数据（用于ECharts渲染）
+  const getVisibleProvinceFoods = useCallback(() => {
+    const periodIndex = TIME_PERIODS.findIndex(p => p.id === currentPeriod);
+    const foods = [];
+    
+    Object.entries(provinceFoodsData || provinceFoods).forEach(([provinceName, provinceFoodsList]) => {
+      const centerCoord = getProvinceCenter(provinceName);
+      const visibleFoods = provinceFoodsList.filter(food => {
+        const foodPeriodIndex = TIME_PERIODS.findIndex(p => p.id === food.period);
+        return foodPeriodIndex <= periodIndex;
+      });
+      
+      // 为每个食物创建偏移坐标，避免重叠
+      // 根据食物数量动态调整偏移半径
+      const baseRadius = visibleFoods.length === 1 ? 0 : 
+                         visibleFoods.length === 2 ? 0.5 :
+                         visibleFoods.length === 3 ? 0.6 : 0.8;
+      
+      visibleFoods.forEach((food, index) => {
+        // 均匀分布在圆周上
+        const angle = visibleFoods.length === 1 ? 0 : 
+                      (index / visibleFoods.length) * 2 * Math.PI - Math.PI / 2;
+        
+        // 如果有多个食物，使用更大的偏移半径
+        const radius = visibleFoods.length === 1 ? 0 : baseRadius;
+        const offsetLng = Math.cos(angle) * radius;
+        const offsetLat = Math.sin(angle) * radius;
+        
+        foods.push({
+          name: food.name,
+          value: [centerCoord[0] + offsetLng, centerCoord[1] + offsetLat],
+          provinceName,
+          description: food.description,
+          originalCoord: centerCoord
+        });
+      });
+    });
+    
+    return foods;
+  }, [currentPeriod, getProvinceCenter, provinceFoodsData]);
 
   useEffect(() => {
     if (!chartRef.current) return;
 
     chartInstance.current = echarts.init(chartRef.current);
+    
+    // 将 chartInstance 传递给父组件
+    if (onChartInit) {
+      onChartInit(chartInstance.current);
+    }
 
     // 直接使用导入的地图数据
     console.log('地图数据加载成功');
@@ -202,6 +459,7 @@ const ChinaMap = ({ onCropClick, selectedCrop, currentPeriod, isPlaying, playbac
 
     const visibleCrops = getVisibleCrops();
     const visiblePaths = getVisiblePaths();
+    const visibleProvinceFoods = getVisibleProvinceFoods();
 
     const series = [
       // 基础散点 - 所有可见作物
@@ -254,6 +512,53 @@ const ChinaMap = ({ onCropClick, selectedCrop, currentPeriod, isPlaying, playbac
         itemStyle: {
           color: MAP_COLORS.heroCrop
         }
+      },
+      // 省份美食散点 - 使用ECharts渲染确保位置稳定
+      {
+        type: 'scatter',
+        coordinateSystem: 'geo',
+        data: visibleProvinceFoods.map(item => ({
+          name: item.name,
+          value: [...item.value, 8], // 大小为8
+          itemData: item
+        })),
+        symbolSize: 8,
+        itemStyle: {
+          color: '#667eea',
+          borderColor: '#fff',
+          borderWidth: 1,
+          shadowBlur: 5,
+          shadowColor: 'rgba(0, 0, 0, 0.3)'
+        },
+        label: {
+          show: true,
+          formatter: '{b}',
+          position: 'top',
+          distance: 8,
+          fontSize: 9,
+          fontWeight: 'bold',
+          color: '#333',
+          backgroundColor: 'rgba(255,255,255,0.95)',
+          padding: [3, 5],
+          borderRadius: 4,
+          borderWidth: 1,
+          borderColor: '#ccc',
+          // 智能隐藏重叠标签
+          hideOverlap: true,
+          // 允许标签位置自适应调整
+          moveOverlap: 'shiftY'
+        },
+        emphasis: {
+          scale: 1.8,
+          label: {
+            show: true,
+            fontSize: 11,
+            backgroundColor: 'rgba(255,255,255,1)',
+            borderColor: '#999'
+          }
+        },
+        animationDuration: 500,
+        animationEasing: 'elasticOut'
       },
       // 传播路径线
       ...visiblePaths.flatMap(path => 
@@ -316,16 +621,30 @@ const ChinaMap = ({ onCropClick, selectedCrop, currentPeriod, isPlaying, playbac
         trigger: 'item',
         formatter: function(params) {
           if (params.data && params.data.itemData) {
-            const crop = params.data.itemData;
-            const period = TIME_PERIODS.find(p => p.id === crop.period);
-            return `
-              <div style="padding: 8px;">
-                <strong style="font-size: 14px;">${crop.name}</strong><br/>
-                <span style="color: #666;">地区: ${crop.region}</span><br/>
-                <span style="color: #666;">时期: ${period?.name || '未知'}</span><br/>
-                <span style="color: #666;">类型: ${crop.type === 'native' ? '本土作物' : '外来引入'}</span>
-              </div>
-            `;
+            const item = params.data.itemData;
+            
+            // 判断是作物数据还是省份美食数据
+            if (item.period) {
+              // 作物数据
+              const period = TIME_PERIODS.find(p => p.id === item.period);
+              return `
+                <div style="padding: 8px;">
+                  <strong style="font-size: 14px;">${item.name}</strong><br/>
+                  <span style="color: #666;">地区: ${item.region || '未知'}</span><br/>
+                  <span style="color: #666;">时期: ${period?.name || '未知'}</span><br/>
+                  <span style="color: #666;">类型: ${item.type === 'native' ? '本土作物' : '外来引入'}</span>
+                </div>
+              `;
+            } else if (item.provinceName) {
+              // 省份美食数据
+              return `
+                <div style="padding: 8px;">
+                  <strong style="font-size: 14px;">${item.name}</strong><br/>
+                  <span style="color: #666;">地区: ${item.provinceName}</span><br/>
+                  <span style="color: #666;">${item.description || ''}</span>
+                </div>
+              `;
+            }
           }
           return params.name;
         }
@@ -433,16 +752,16 @@ const Legend = () => {
           <span className="text-sm text-gray-600">本土起源作物</span>
         </div>
         <div className="flex items-center gap-3">
-          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: MAP_COLORS.introducedCrop }}></div>
-          <span className="text-sm text-gray-600">外来引入作物</span>
-        </div>
-        <div className="flex items-center gap-3">
           <div className="w-3 h-3 rounded-full shadow-lg" style={{ backgroundColor: MAP_COLORS.heroCrop, boxShadow: `0 0 8px ${MAP_COLORS.heroCrop}` }}></div>
           <span className="text-sm text-gray-600">重点作物 (可点击)</span>
         </div>
         <div className="flex items-center gap-3">
           <div className="w-6 h-0.5" style={{ backgroundColor: MAP_COLORS.pathColor }}></div>
           <span className="text-sm text-gray-600">传播路径</span>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="w-3 h-3 rounded-full border border-white shadow-sm" style={{backgroundColor: '#667eea'}}></div>
+          <span className="text-sm text-gray-600">省份美食</span>
         </div>
       </div>
     </motion.div>
@@ -451,14 +770,24 @@ const Legend = () => {
 
 // 统计信息组件
 const Statistics = ({ currentPeriod }) => {
+  // 只统计本土作物
   const visibleCrops = foodData.filter(crop => {
     const periodIndex = TIME_PERIODS.findIndex(p => p.id === currentPeriod);
     const cropPeriodIndex = TIME_PERIODS.findIndex(p => p.id === crop.period);
-    return cropPeriodIndex <= periodIndex;
+    return cropPeriodIndex <= periodIndex && crop.type === 'native';
   });
 
-  const nativeCount = visibleCrops.filter(c => c.type === 'native').length;
-  const introducedCount = visibleCrops.filter(c => c.type === 'introduced').length;
+  const nativeCount = visibleCrops.length;
+
+  // 计算可见的省份食物数量
+  const periodIndex = TIME_PERIODS.findIndex(p => p.id === currentPeriod);
+  let visibleProvinceFoodsCount = 0;
+  Object.values(provinceFoods).forEach(foods => {
+    visibleProvinceFoodsCount += foods.filter(food => {
+      const foodPeriodIndex = TIME_PERIODS.findIndex(p => p.id === food.period);
+      return foodPeriodIndex <= periodIndex;
+    }).length;
+  });
 
   return (
     <motion.div
@@ -474,8 +803,8 @@ const Statistics = ({ currentPeriod }) => {
           <div className="text-xs text-gray-500">本土作物</div>
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold" style={{ color: MAP_COLORS.introducedCrop }}>{introducedCount}</div>
-          <div className="text-xs text-gray-500">外来作物</div>
+          <div className="text-2xl font-bold text-amber-600">{visibleProvinceFoodsCount}</div>
+          <div className="text-xs text-gray-500">省份美食</div>
         </div>
       </div>
     </motion.div>
@@ -489,6 +818,7 @@ function App() {
   const [currentPeriod, setCurrentPeriod] = useState(TIME_PERIODS[0].id);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [chartInstance, setChartInstance] = useState(null);
 
   // 模拟加载动画
   useEffect(() => {
@@ -572,6 +902,8 @@ function App() {
                 currentPeriod={currentPeriod}
                 isPlaying={isPlaying}
                 playbackSpeed={playbackSpeed}
+                onChartInit={setChartInstance}
+                provinceFoodsData={provinceFoods}
               />
               
               {/* 统计信息 */}
